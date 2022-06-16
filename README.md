@@ -4,8 +4,8 @@
 
 [React Native] bridging library that integrates WeChat SDKs:
 
-- [x] iOS SDK 1.8.7.1
-- [x] Android SDK 5.5.6
+- [x] iOS SDK 1.9.2
+- [x] Android SDK 6.8.0
 
 ## 前言
 
