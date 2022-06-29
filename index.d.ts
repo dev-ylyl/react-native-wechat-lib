@@ -39,6 +39,8 @@ declare module 'react-native-wechat-lib' {
     state?: string;
     returnKey?: string;
   }
+
+  export function openCustomService(corpid: string, url: string): Promise<WeChatResp>;
   export function sendAuthRequest(scope: string | string[], state?: string): Promise<AuthResponse>;
   export interface ShareMetadata {
     type: 'news' | 'text' | 'imageUrl' | 'imageFile' | 'imageResource' | 'video' | 'audio' | 'file';

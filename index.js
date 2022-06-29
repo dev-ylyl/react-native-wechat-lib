@@ -425,6 +425,25 @@ export function subscribeMessage(data) {
 }
 
 /**
+ * Open WechatCustomService
+ * @method openCustomService
+ * @param
+ * @return {Promise}
+ */
+export function openCustomService(corpid, url) {
+  return new Promise((resolve, reject) => {
+    WeChat.openCustomService(corpid, url);
+    emitter.once('WXOpenCustomerServiceResp.Resp', (resp) => {
+      if (resp.errCode === 0) {
+        resolve(resp);
+      } else {
+        reject(new WechatError(resp));
+      }
+    });
+  });
+}
+
+/**
  * Share something to favorite
  * @method shareToFavorite
  * @param {Object} data
