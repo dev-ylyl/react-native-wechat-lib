@@ -157,7 +157,7 @@ const nativeShareVideo = wrapApi(WeChat.shareVideo);
 const nativeShareWebpage = wrapApi(WeChat.shareWebpage);
 const nativeShareMiniProgram = wrapApi(WeChat.shareMiniProgram);
 const nativeSubscribeMessage = wrapApi(WeChat.subscribeMessage);
-
+const nativeOpenCustomService = wrapApi(WeChat.openCustomService);
 const nativeChooseInvoice = wrapApi(WeChat.chooseInvoice);
 const nativeShareFile = wrapApi(WeChat.shareFile);
 
