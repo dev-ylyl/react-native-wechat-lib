@@ -29,9 +29,11 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelbiz.ChooseCardFromWXCardPackage;
+import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.ShowMessageFromWX;
@@ -200,6 +202,19 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         req.scope = scope;
         req.state = state;
         callback.invoke(null, api.sendReq(req));
+    }
+
+    @ReactMethod
+    public void openCustomService(String corpid,String url,Callback callback){
+        if(api.getWXAppSupportAPI() >= Build.SUPPORT_OPEN_CUSTOMER_SERVICE_CHAT){
+            WXOpenCustomerServiceChat.Req req = new WXOpenCustomerServiceChat.Req();
+            req.corpId = corpid;
+            req.url = url;
+            callback.invoke(null,api.sendReq(req));
+        }else{
+            callback.invoke("该机微信版本过低,不支持微信客服");
+            return;
+        }
     }
 
     /**
@@ -988,6 +1003,11 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
             ChooseCardFromWXCardPackage.Resp resp = (ChooseCardFromWXCardPackage.Resp) baseResp;
             map.putString("type", "WXChooseInvoiceResp.Resp");
             map.putString("cardItemList", resp.cardItemList);
+        } else if(baseResp instanceof WXOpenCustomerServiceChat.Resp){
+            WXOpenCustomerServiceChat.Resp resp= (WXOpenCustomerServiceChat.Resp)baseResp;
+            map.putString("type","WXOpenCustomerServiceResp.Resp");
+            map.putInt("errCode",resp.errCode);
+            map.putString("errStr",resp.errStr);
         }
 
         this.getReactApplicationContext()

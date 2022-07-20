@@ -430,9 +430,9 @@ export function subscribeMessage(data) {
  * @param
  * @return {Promise}
  */
-export function openCustomService(corpid, url) {
+ export function openCustomService(corpid, url) {
   return new Promise((resolve, reject) => {
-    WeChat.openCustomService(corpid, url);
+    Platform.OS === 'android' ? nativeOpenCustomService(corpid, url) : WeChat.openCustomService(corpid, url);
     emitter.once('WXOpenCustomerServiceResp.Resp', (resp) => {
       if (resp.errCode === 0) {
         resolve(resp);
